@@ -1,4 +1,4 @@
-# Project Title: Backend in Golang
+# Project: Backend in Golang - API REST LIBRARY
 
 ## Description
 This project is a backend written in Golang using the following libraries:

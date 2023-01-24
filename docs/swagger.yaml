@@ -1,0 +1,174 @@
+definitions:
+  model.Book:
+    properties:
+      id:
+        type: integer
+      isbn:
+        type: string
+      longDescription:
+        type: string
+      pageCount:
+        type: integer
+      shortDescription:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+    required:
+    - title
+    type: object
+  model.BookResponse:
+    properties:
+      _links:
+        properties:
+          self:
+            type: string
+        type: object
+      embedded:
+        properties:
+          book:
+            $ref: '#/definitions/model.Book'
+          message:
+            type: string
+        type: object
+    type: object
+  model.Main:
+    properties:
+      _links:
+        properties:
+          self:
+            type: string
+        type: object
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Welcome to the API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Main'
+      summary: Main
+      tags:
+      - Main
+  /books:
+    post:
+      consumes:
+      - application/json
+      description: Create a book
+      parameters:
+      - description: Book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/model.Book'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.BookResponse'
+      summary: Create a book
+      tags:
+      - Books
+  /books/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a book
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BookResponse'
+      summary: Delete a book
+      tags:
+      - Books
+    get:
+      consumes:
+      - application/json
+      description: Get one book
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BookResponse'
+      summary: Get one book
+      tags:
+      - Books
+    put:
+      consumes:
+      - application/json
+      description: Update a book
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/model.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BookResponse'
+      summary: Update a book
+      tags:
+      - Books
+  /books/search/{title}:
+    get:
+      consumes:
+      - application/json
+      description: Search a book by title
+      parameters:
+      - description: Book title
+        in: path
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BookResponse'
+      summary: Search a book by title
+      tags:
+      - Books
+swagger: "2.0"
